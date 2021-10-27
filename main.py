@@ -17,10 +17,24 @@ class neuralNetwark:
 
     # использование сигмойды в качестве функции активации
     self.activation_func = lambda x: scipy.special.expit(x)
+
     pass
   def train():
     pass
-  def query():
-    pass
+  def query(self, inputs_list):
+    # преобразование списка входных значений в двумерный массив
+    inputs = numpy.array(inputs_list, ndmin=2).T
+
+    # расчет входяших сигналов для скрытого поля
+    h_inputs = numpy.dot(self.who, inputs)
+    # расчет исходяших сигналов для скрытого поля
+    h_outputs = self.activation_func(h_inputs)
+
+    # расчет входяших сигналов для выходного поля
+    final_inputs = numpy.dot(self.who, h_outputs)
+    # расчет исходяших сигналов для выходного поля
+    final_outputs = self.activation_func(final_inputs)
+
+    return final_outputs
 
 n = neuralNetwark(3, 3, 3, 0.3)
