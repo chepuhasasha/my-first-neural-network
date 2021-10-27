@@ -25,16 +25,17 @@ class neuralNetwark:
     # преобразование списка входных значений в двумерный массив
     inputs = numpy.array(inputs_list, ndmin=2).T
 
-    # расчет входяших сигналов для скрытого поля
+    # расчет входяших сигналов для скрытого слоя
     h_inputs = numpy.dot(self.who, inputs)
-    # расчет исходяших сигналов для скрытого поля
+    # расчет исходяших сигналов для скрытого слоя
     h_outputs = self.activation_func(h_inputs)
 
-    # расчет входяших сигналов для выходного поля
+    # расчет входяших сигналов для выходного слоя
     final_inputs = numpy.dot(self.who, h_outputs)
-    # расчет исходяших сигналов для выходного поля
+    # расчет исходяших сигналов для выходного слоя
     final_outputs = self.activation_func(final_inputs)
 
     return final_outputs
 
 n = neuralNetwark(3, 3, 3, 0.3)
+print(n.query([1.0, 0.5, -1.5]))
