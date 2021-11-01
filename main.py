@@ -28,9 +28,8 @@ class NN:
             network.append({
                 'in': in_lvl,
                 'out': self.actvation(in_lvl),
-                'W': w
+                'w': w
             })
-        print(network)
         return network
 
     # def update(self, e, out, out_prev):
@@ -38,7 +37,7 @@ class NN:
 
     def train(self, inputs, target):
         network = self.query(inputs) # состояние сети
-        t = numpy.array(target, ndmin=2).T,
+        t = numpy.array(target, ndmin=2).T, # приведение к двумерному массиву
         out = network[-1]['out'] # выход с последнего слоя
         error = pow((t - out), 2) # функция ошибки
         # обратное распростронение ошибки
