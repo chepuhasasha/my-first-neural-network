@@ -32,8 +32,8 @@ class NN:
             })
         return network
 
-    # def update(self, e, out, out_prev):
-    #     return self.lr * numpy.dot((e * out * (1.0 - out)), numpy.transpose(out_prev))
+    def update(self, e, out, out_prev):
+        return self.lr * numpy.dot((e * out * (1.0 - out)), numpy.transpose(out_prev))
 
     def train(self, inputs, target):
         network = self.query(inputs) # состояние сети
@@ -41,12 +41,14 @@ class NN:
         out = network[-1]['out'] # выход с последнего слоя
         error = pow((t - out), 2) # функция ошибки
         # обратное распростронение ошибки
-        for lvl in reversed(network):
-            e = numpy.dot(lvl['w'].T, error)
-            lvl['w'] += self.update(error, lvl['out'], )
-
-            error = e
+        for i, lvl in reversed(list(enumerate(network))):
+            if(i > 1):
+                e = numpy.dot(lvl['w'].T, error)
+                lvl['w'] += self.update(error, lvl['out'], network[i-1]['out'])[0]
+                error = e
+        print(network)
+        pass
 
 
 n = NN(0.3, [3, 3, 3])
-n.query([10, 10, 10])
+n.train([10, 10, 10], [20, 20, 20])
