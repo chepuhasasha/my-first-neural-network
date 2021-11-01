@@ -27,10 +27,26 @@ class NN:
             in_lvl = numpy.dot(w, network[i]['out'])
             network.append({
                 'in': in_lvl,
-                'out': self.actvation(in_lvl)
+                'out': self.actvation(in_lvl),
+                'W': w
             })
         print(network)
         return network
+
+    # def update(self, e, out, out_prev):
+    #     return self.lr * numpy.dot((e * out * (1.0 - out)), numpy.transpose(out_prev))
+
+    def train(self, inputs, target):
+        network = self.query(inputs) # состояние сети
+        t = numpy.array(target, ndmin=2).T,
+        out = network[-1]['out'] # выход с последнего слоя
+        error = pow((t - out), 2) # функция ошибки
+        # обратное распростронение ошибки
+        for lvl in reversed(network):
+            e = numpy.dot(lvl['w'].T, error)
+            lvl['w'] += self.update(error, lvl['out'], )
+
+            error = e
 
 
 n = NN(0.3, [3, 3, 3])
