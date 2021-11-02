@@ -1,6 +1,6 @@
 import numpy
 import scipy.special
-
+import matplotlib.pyplot as plt
 
 class NN:
     def __init__(self, lr, config=[3, 3, 3]):
@@ -45,20 +45,32 @@ class NN:
         pass
 
     def show(self):
-        print('- NETWORK -')
+        print('NETWORK')
         for lvl in self.network:
-            print('―――――――――――――')
-            print('lavel:', lvl['id'])
+            print('lavel:', lvl['id'], '―――――――――――――')
             for i in range(len(lvl['in'])):
-                line = '⊕   i▼ - ' + \
-                    str(lvl['in'][i]) + ' o▲ - ' + str(lvl['out'][i]) + \
-                    ' e☒ - ' + str(lvl['err'][i])
+                line = '⊕  '+str(i)+'   i▼:' + \
+                    str(lvl['in'][i]) + ' o▲:' + str(lvl['out'][i]) + \
+                    ' e☒: ' + str(lvl['err'][i])
                 print(line)
                 if 'w' in lvl:
-                    for w in lvl['w']:
-                        print('🠗 '+ str(w[i]))
+                    for k, w in enumerate(lvl['w']):
+                        print('🠗 '+ str(i) + str(k) +':  '+ str(w[i]))
 
 
-n = NN(0.3)
-n.train([1, 0.8, 0.4], [1, 0.5, 0.5])
-n.show()
+# n = NN(0.3)
+# n.train([1, 0.8, 0.4], [1, 0.5, 0.5])
+# n.show()
+
+
+data_file = open("./mnist_train_100.csv", 'r') 
+data_list = data_file.readlines() 
+data_file.close()
+
+
+all_values = data_list[1].split(',')
+image_array = numpy.asfarray(all_values[1:]).reshape((28,28)) 
+plt.imshow(image_array, cmap='Greys', interpolation='None')
+plt.show()
+# scaled_input = (numpy.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01 
+# print(scaled_input)
