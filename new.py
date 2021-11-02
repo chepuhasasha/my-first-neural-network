@@ -1,5 +1,11 @@
 import numpy
 import scipy.special
+from PIL import Image, ImageDraw
+ 
+# Пустой желтый фон.
+im = Image.new('RGB', (500, 300), (219, 193, 27))
+draw = ImageDraw.Draw(im)
+im.show()
 
 
 class NN:
@@ -45,10 +51,10 @@ class NN:
         pass
 
     def show(self):
-        print('NETWORK')  
+        print('- NETWORK -')  
         for lvl in self.network:
-            print('|||||||||||||||||||||||||')
             print('lavel:', lvl['id'])
+            print('|||||||||||||||||||||||||||||||||||||||||||||||||||')
             print('in: \n', lvl['in'])
             print('out: \n', lvl['out'])
             if 'w' in lvl:
