@@ -28,6 +28,9 @@ class NN:
                 lvl['out'] = self.actvation(in_lvl)
         return self.network
 
+    def update(self, error, out, out_prev): # дефференцированая функция градиентного спуска
+        return self.lr * numpy.dot((e * out * (1.0 - out)), numpy.transpose(out_prev))
+
     def train(self, input, target):
         pass
 
