@@ -16,4 +16,20 @@ class NN:
             self.network.append(lvl)
         pass
 
+    def query(self, input): # опрос сети
+        for i, lvl in enumerate(self.network):
+            if i == 0: #входной слой
+                in_lvl = numpy.array(input, ndmin=2).T
+                lvl['in'] = in_lvl
+                lvl['out'] = in_lvl
+            else:
+                in_lvl = numpy.dot(self.network[i-1]['w'], self.network[i-1]['out'])
+                lvl['in'] = in_lvl
+                lvl['out'] = self.actvation(in_lvl)
+        return self.network
+
+    def train(self, input, target):
+        pass
+
 n = NN(0.3)
+print(n.query([10,10,10]))
