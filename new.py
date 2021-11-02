@@ -32,7 +32,28 @@ class NN:
         return self.lr * numpy.dot((e * out * (1.0 - out)), numpy.transpose(out_prev))
 
     def train(self, input, target):
+        self.query(input) # состояние сети
+        t = numpy.array(target, ndmin=2).T, # приведение к двумерному массиву
+        out = self.network[-1]['out'] # выход с последнего слоя
+        # обратное распростронение ошибки
+        for i, lvl in reversed(list(enumerate(self.network))):
+            if i == (len(self.network) - 1):
+                lvl['err'] = pow(((t - out)[0]), 2) # функция выходной ошибки
+            else:
+                lvl['err'] = numpy.dot(lvl['w'].T, self.network[i+1]['err'])
+        self.show()
         pass
 
+    def show(self):
+        print('NETWORK')  
+        for lvl in self.network:
+            print('|||||||||||||||||||||||||')
+            print('lavel:', lvl['id'])
+            print('in: \n', lvl['in'])
+            print('out: \n', lvl['out'])
+            if 'w' in lvl:
+              print('w: \n', lvl['w'])
+            print('err: \n', lvl['err'])
+
 n = NN(0.3)
-print(n.query([10,10,10]))
+n.train([10,10,10], [1,0.5,0.5])
