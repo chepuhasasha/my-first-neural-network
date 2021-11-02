@@ -47,15 +47,18 @@ class NN:
     def show(self):
         print('- NETWORK -')
         for lvl in self.network:
+            print('―――――――――――――')
             print('lavel:', lvl['id'])
-            print('|||||||||||||||||||||||||||||||||||||||||||||||||||')
-            print('in: \n', lvl['in'])
-            print('out: \n', lvl['out'])
-            if 'w' in lvl:
-                print('w: \n', lvl['w'])
-            print('err: \n', lvl['err'])
+            for i in range(len(lvl['in'])):
+                line = '⊕   i▼ - ' + \
+                    str(lvl['in'][i]) + ' o▲ - ' + str(lvl['out'][i]) + \
+                    ' e☒ - ' + str(lvl['err'][i])
+                print(line)
+                if 'w' in lvl:
+                    for w in lvl['w']:
+                        print('🠗 '+ str(w[i]))
 
 
 n = NN(0.3)
-n.train([10, 10, 10], [1, 0.5, 0.5])
+n.train([1, 0.8, 0.4], [1, 0.5, 0.5])
 n.show()
